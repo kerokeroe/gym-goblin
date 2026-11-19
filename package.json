@@ -9,7 +9,10 @@
     "client": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "migrate-lbs-to-kg": "node scripts/migrate-lbs-to-kg.js"
+    "migrate-lbs-to-kg": "node scripts/migrate-lbs-to-kg.js",
+    "test": "node --test",
+    "typecheck": "tsc --noEmit",
+    "import:telegram": "node scripts/import/import-telegram.js"
   },
   "dependencies": {
     "chart.js": "^4.5.1",

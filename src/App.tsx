@@ -54,10 +54,11 @@ type Workout = {
   exercise: string;
   reps: number;
   weight: number;
-  rpe: number;
+  rpe: number | null;
   extraReps: number;
   notes: string;
   side: string;
+  durationSec?: number | null;
 };
 
 type ExerciseSummary = {
@@ -125,14 +126,14 @@ function App() {
           date: entry.date,
           maxWeight: entry.weight,
           totalReps: entry.reps,
-          maxRpe: entry.rpe,
+          maxRpe: entry.rpe ?? 0,
           extraReps: entry.extraReps,
           e1rm
         };
       } else {
         daily[entry.date].maxWeight = Math.max(daily[entry.date].maxWeight, entry.weight);
         daily[entry.date].totalReps += entry.reps;
-        daily[entry.date].maxRpe = Math.max(daily[entry.date].maxRpe, entry.rpe);
+        daily[entry.date].maxRpe = Math.max(daily[entry.date].maxRpe, entry.rpe ?? 0);
         daily[entry.date].extraReps = Math.max(daily[entry.date].extraReps, entry.extraReps);
         daily[entry.date].e1rm = Math.max(daily[entry.date].e1rm, e1rm);
       }
@@ -594,8 +595,8 @@ function App() {
 
   function saveEdit() {
     if (!editingWorkout || !editForm) return;
-    const { date, exercise, reps, weight, rpe, extraReps, notes, side } = editForm;
-    if (!date || !exercise || reps == null || weight == null || rpe == null || extraReps == null) {
+    const { date, exercise, reps, weight, rpe, extraReps, notes, side, durationSec } = editForm;
+    if (!date || !exercise || reps == null || weight == null || extraReps == null) {
       setMessage('Missing required fields.');
       return;
     }
@@ -606,7 +607,7 @@ function App() {
     fetch(`/api/workouts/${editingWorkout.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ date, exercise, reps, weight, rpe, extraReps, notes, side: side || '' })
+      body: JSON.stringify({ date, exercise, reps, weight, rpe: rpe ?? null, extraReps, notes, side: side || '', durationSec: durationSec ?? null })
     })
       .then((res) => {
         if (!res.ok) throw new Error('Failed to update');
@@ -784,7 +785,7 @@ function App() {
                                     {workout.reps} reps @ {workout.weight} kg{workout.extraReps > 0 ? ` +${workout.extraReps}` : ''}
                                   </div>
                                   <div className="calendar-right">
-                                    <span className={getRpeClass(workout.rpe)}>RPE {workout.rpe}</span>
+                                    {workout.rpe != null && <span className={getRpeClass(workout.rpe)}>RPE {workout.rpe}</span>}
                                     <button
                                       type="button"
                                       className="workout-btn edit-btn"
@@ -1039,7 +1040,7 @@ function App() {
                                     )}
                                     {entry.reps} reps @ {entry.weight} kg{entry.extraReps > 0 ? ` +${entry.extraReps} extra` : ''}
                                   </span>
-                                  <span className={getRpeClass(entry.rpe)}>RPE {entry.rpe}</span>
+                                  {entry.rpe != null && <span className={getRpeClass(entry.rpe)}>RPE {entry.rpe}</span>}
                                 </div>
                               ))}
                               {fatigueIndex !== null && (
