@@ -1,13 +1,32 @@
-# Gym Buddy
+# Gym Goblin
 
-A local gym tracker app built with React, Vite, Express, and SQLite.
+[![CI](https://github.com/kerokeroe/gym-goblin/actions/workflows/ci.yml/badge.svg)](https://github.com/kerokeroe/gym-goblin/actions/workflows/ci.yml)
+
+A gym tracker built with React, Vite, Express, and SQLite.
 
 ## Run locally
 
-1. Open a terminal in `c:\Users\user\Desktop\Gym Tracker`
-2. Run `npm install`
-3. Run `npm run dev`
-4. Open `http://localhost:5173`
+Requires Node.js 24.
+
+```bash
+git clone https://github.com/kerokeroe/gym-goblin.git
+cd gym-goblin
+npm install
+cp .env.example .env   # only needed for the Telegram bot
+npm run dev            # API on :4000, web app on http://localhost:5173, bot
+```
+
+To run without the bot: `npm run server` and `npm run client` in two terminals.
+
+## Tests
+
+```bash
+npm test            # parser, migration, import and API tests (node:test)
+npm run typecheck   # TypeScript
+npm run build       # production build
+```
+
+CI runs all three on every push and pull request.
 
 ## Features
 

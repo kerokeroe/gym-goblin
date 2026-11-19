@@ -628,7 +628,7 @@ function App() {
   return (
     <div className="app-shell">
       <header className="top-bar">
-        <div className="logo">Gym Buddy</div>
+        <div className="logo">Gym Goblin</div>
         <p className="subtext">A plain-spoken log of workouts, calendar history, and progress.</p>
       </header>
 

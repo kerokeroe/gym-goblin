@@ -19,5 +19,5 @@ try {
 
 const port = process.env.PORT || 4000;
 createApp(db).listen(port, () => {
-  console.log(`Gym Tracker API running at http://localhost:${port} (db: ${dbPath})`);
+  console.log(`Gym Goblin API running at http://localhost:${port} (db: ${dbPath})`);
 });

@@ -77,7 +77,7 @@ bot.command('quick', async (ctx) => {
     const res = await fetch(`${apiBase}/api/exercises/names`);
     exercises = await res.json();
   } catch {
-    return ctx.reply('Could not reach the gym tracker API. Is the server running?');
+    return ctx.reply('Could not reach the Gym Goblin API. Is the server running?');
   }
 
   // Default date is when this message was actually sent, not whenever the bot wakes up to process it.
@@ -151,7 +151,7 @@ async function promptExercise(ctx, session) {
   } catch (err) {
     console.error('[promptExercise] fetch failed', err);
     sessions.delete(ctx.chat.id);
-    return ctx.reply('Could not reach the gym tracker API. Is the server running?');
+    return ctx.reply('Could not reach the Gym Goblin API. Is the server running?');
   }
   if (!exercises.length) {
     sessions.delete(ctx.chat.id);
