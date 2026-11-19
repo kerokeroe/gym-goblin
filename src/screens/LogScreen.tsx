@@ -32,7 +32,9 @@ export function LogScreen({ data, onLog, onEdit }: Props) {
   const dayPRs = daySets.filter((s) => prIds.has(s.id));
   const lastWorkout = sets.reduce((max, s) => (s.date > max ? s.date : max), '');
 
-  const hero = heroFor(dayPRs.at(-1), daySets.length, lastWorkout, date);
+  // Headline the day's heaviest record (the latest one if weights tie).
+  const headlinePR = dayPRs.reduce<WorkoutSet | undefined>((top, s) => (!top || s.weight >= top.weight ? s : top), undefined);
+  const hero = heroFor(headlinePR, daySets.length, lastWorkout, date);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
